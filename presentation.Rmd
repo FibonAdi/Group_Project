@@ -41,7 +41,7 @@ style_xaringan(
 
 class: center, middle
 
-## A statement of the overall goal / research question
+## How stream time affects watch time and followers
 
 ---
 

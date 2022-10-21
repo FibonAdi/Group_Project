@@ -47,27 +47,30 @@ class: center, middle
 
 class: inverse, center, middle
 
-# Section title
+# Introduction
 
 ---
 
-# Hello World
+# Research Question and Data
 
-- Click the `Knit` button to compile your presentation
+- Question
 
-- Make sure to commit and push all resulting files to your GitHub repo
+- Where data is from
+
+- Info about data (varibles, entry etc.). As code
+
 
 ---
 
 class: inverse, middle, center
 
-# Using xaringan
+# Analysis Plan
 
 ---
 
 # xaringan
 
-- The presentation is created using the `xaringan` package
+- Important Varibles
 
 - Use `---` to separate slides and `--` for incremental builds
 
@@ -77,7 +80,7 @@ class: inverse, middle, center
 
 ---
 
-# Layouts
+# Comparisons
 
 You can use plain text
 
@@ -97,7 +100,7 @@ or text in two columns $^*$
 
 ---
 
-# Code
+# Prelim data analysis (stats etc.)
 
 ```{r boring-analysis}
 # a boring analysis
@@ -107,7 +110,7 @@ print(ave)
 
 ---
 
-# Plots
+# Important Stats
 
 ```{r recode-species, echo = FALSE}
 # In this chunk I'm doing a bunch of analysis that I don't want to present 
@@ -127,7 +130,7 @@ ggplot(data = iris_modified, mapping = aes(x = Sepal.Width, y = Sepal.Length, co
 
 ---
 
-## Plot and text
+## Results needed to support hypothesis
 
 .pull-left[
 - Some text

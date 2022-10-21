@@ -1,5 +1,5 @@
 ---
-title: "Presentation title"
+title: "Twitch Streamers"
 subtitle: "Presentation subtitle (if any)"
 author: "Team name <br> Craig, Sophia, Adi, Lauren and Ronan"
 institute: "University of Edinburgh"

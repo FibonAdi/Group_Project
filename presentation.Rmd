@@ -26,6 +26,7 @@ library(tidyverse)
 library(palmerpenguins)
 library(knitr)
 library(xaringanthemer)
+library(ggplot2)
 ```
 
 ```{r setup, include=FALSE}

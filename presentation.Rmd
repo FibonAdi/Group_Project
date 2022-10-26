@@ -41,7 +41,7 @@ style_xaringan(
 
 class: center, middle
 
-## How stream time affects watch time and followers
+## How stream time affects watch time and followers gained.
 
 ---
 

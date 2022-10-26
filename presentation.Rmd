@@ -57,8 +57,7 @@ class: inverse, center, middle
 
 - Where data is from
 
-- Info about data (varibles, entry etc.). As code
-
+- There are `r nrow(twitchdata)` different entries and `r ncol(twitchdata)` different variables.
 
 ---
 

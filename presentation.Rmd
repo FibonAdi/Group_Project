@@ -53,9 +53,9 @@ class: inverse, center, middle
 
 # Research Question and Data
 
-- Question
+- How stream time affects watch time and followers gained 
 
-- Where data is from
+- Awesome public data sets from kaggle.com 
 
 - Info about data (varibles, entry etc.). As code
 

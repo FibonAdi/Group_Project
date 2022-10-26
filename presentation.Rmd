@@ -1,7 +1,6 @@
 ---
-title: "Presentation title"
-subtitle: "Presentation subtitle (if any)"
-author: "Team name <br> Craig, Sophia, Adi, Lauren and Ronan"
+title: "Twitch Streamer Presentation"
+author: "CARLS <br> Craig, Adi, Ronan, Lauren, and Sophia"
 institute: "University of Edinburgh"
 date: "`r Sys.Date()`"
 output:

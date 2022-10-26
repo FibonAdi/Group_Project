@@ -52,9 +52,9 @@ class: inverse, center, middle
 
 # Research Question and Data
 
-- Question
+- How does stream time affect watch time and followers gained?
 
-- Where data is from
+- This data was found through Awesome Public Datasets and was downloaded from Kaggle.com .
 
 - There are `r nrow(twitchdata)` different entries and `r ncol(twitchdata)` different variables.
 
@@ -69,6 +69,8 @@ class: inverse, middle, center
 # Important Variables
 
 - Channel, Nominal Categorical Variable 
+
+- Stream Time, Discrete Numerical Variable
 
 - Watch Time, Discrete Numerical Variable 
 

@@ -53,7 +53,7 @@ class: inverse, center, middle
 
 # Research Question and Data
 
-- How stream time affects follwers gained and watch time (over the duration of a year)
+- How stream time affects followers gained and watch time (over the duration of a year)
 
 - Awesome public data sets from kaggle.com
 

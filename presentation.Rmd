@@ -1,7 +1,12 @@
 ---
+<<<<<<< HEAD
 title: "Twitch Streamers"
 subtitle: "Presentation subtitle (if any)"
 author: "Team name <br> Craig, Sophia, Adi, Lauren and Ronan"
+=======
+title: "Twitch Streamer Presentation"
+author: "CARLS <br> Craig, Adi, Ronan, Lauren, and Sophia"
+>>>>>>> 1d8cfe358b2674cf0bc0c6ef6f3b2f635428d009
 institute: "University of Edinburgh"
 date: "`r Sys.Date()`"
 output:

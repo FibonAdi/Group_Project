@@ -1,6 +1,12 @@
 ---
+<<<<<<< HEAD
+title: "Twitch Streamers"
+subtitle: "Presentation subtitle (if any)"
+author: "Team name <br> Craig, Sophia, Adi, Lauren and Ronan"
+=======
 title: "Twitch Streamer Presentation"
 author: "CARLS <br> Craig, Adi, Ronan, Lauren, and Sophia"
+>>>>>>> 1d8cfe358b2674cf0bc0c6ef6f3b2f635428d009
 institute: "University of Edinburgh"
 date: "`r Sys.Date()`"
 output:
@@ -20,6 +26,7 @@ library(tidyverse)
 library(palmerpenguins)
 library(knitr)
 library(xaringanthemer)
+library(ggplot2)
 ```
 
 ```{r setup, include=FALSE}
@@ -52,11 +59,26 @@ class: inverse, center, middle
 
 # Research Question and Data
 
-- Question
+<<<<<<< HEAD
+- How stream time affects followers gained and watch time (over the duration of a year)
 
-- Where data is from
+- Awesome public data sets from kaggle.com
+=======
+- How does stream time affect watch time and followers gained?
 
+- This data was found through Awesome Public Datasets and was downloaded from Kaggle.com .
+>>>>>>> 38105672ac2b8da222c4cf80fb4cf84595080e06
+
+<<<<<<< HEAD
+```{r}
+nrow(twitchdata)
+ncol(twitchdata)
+
+```
+
+=======
 - There are `r nrow(twitchdata)` different entries and `r ncol(twitchdata)` different variables.
+>>>>>>> fcaf017a80cb8f64df160910a6f887c3adc527ed
 
 ---
 
@@ -69,6 +91,8 @@ class: inverse, middle, center
 # Important Variables
 
 - Channel, Nominal Categorical Variable 
+
+- Stream Time, Discrete Numerical Variable
 
 - Watch Time, Discrete Numerical Variable 
 

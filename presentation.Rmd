@@ -119,7 +119,7 @@ ggplot(twitchdata,
   geom_bar() +
   theme_minimal()
 ```
-
+]
 ---
 
 # Important Stats
@@ -130,7 +130,7 @@ ggplot(twitchdata,
 language_data <- count(twitchdata, Language, sort= TRUE)
 print(language_data)
 ```
-
+---
 ```{r plot-data, echo = FALSE, warning=FALSE}
 # Code hidden with echo = FALSE
 # Uses modified iris dataset from previous chunk

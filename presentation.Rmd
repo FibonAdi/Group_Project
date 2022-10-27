@@ -105,10 +105,19 @@ or text in two columns $^*$
 
 # Prelim data analysis (stats etc.)
 
-```{r boring-analysis}
-# a boring analysis
-ave <- mean(cars$dist)
-print(ave)
+.pull-left[
+- Some languages are more popular, language may have an effect on the number of views
+- May need to try averages per language, or try to summerise data for followers gained (maybe as a percentage)
+]
+.pull-right[
+```{r warning=FALSE, out.width="100%", fig.width=4, echo=FALSE}
+# see how I changed out.width and fig.width from defaults
+# to make the figure bigger
+ggplot(twitchdata, 
+       aes(y = Language,
+           fill = Language)) +
+  geom_bar() +
+  theme_minimal()
 ```
 
 ---
@@ -118,19 +127,22 @@ print(ave)
 ```{r recode-species, echo = FALSE}
 # In this chunk I'm doing a bunch of analysis that I don't want to present 
 # in my slides. But I need the resulting data frame for a plot I want to present.
-iris_modified <- iris %>%
-  mutate(Species = fct_other(Species, keep = "setosa"))
+language_data <- count(twitchdata, Language, sort= TRUE)
+print(language_data)
 ```
 
-```{r plot-iris, echo = FALSE}
+```{r plot-data, echo = FALSE, warning=FALSE}
 # Code hidden with echo = FALSE
 # Uses modified iris dataset from previous chunk
 # Play around with height and width until you're happy with the look
 ggplot(data = twitchdata, 
-       mapping = aes(x = log(Stream.time.minutes.), 
-                     y = log(Followers.gained))) +
+       mapping = aes(x = Stream.time.minutes., 
+                     y = Followers.gained,
+                     color=Language)) +
                  geom_point() + 
-                 labs (x = "Stream Time (mins)",
+                 labs (title = "Stream Time to Followers Gained",
+                       subtitle = "",
+                       x = "Stream Time (min)",
                        y = "Followers Gained") +
                  theme_minimal() # theme options: https://ggplot2.tidyverse.org/reference/ggtheme.html
 ```
@@ -147,21 +159,8 @@ ggplot(data = twitchdata,
 ```{r warning=FALSE, out.width="100%", fig.width=4, echo=FALSE}
 # see how I changed out.width and fig.width from defaults
 # to make the figure bigger
-ggplot(penguins, aes(x = bill_length_mm, y = species, color = species)) +
-  geom_boxplot() +
-  theme_minimal()
 ```
 ]
-
----
-
-# Tables
-
-If you want to generate a table, make sure it is in the HTML format (instead of Markdown or other formats), e.g.,
-
-```{r iris-table, echo = FALSE}
-kable(head(iris), format = "html")
-```
 
 ---
 

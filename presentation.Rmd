@@ -1,12 +1,6 @@
 ---
-<<<<<<< HEAD
-title: "Twitch Streamers"
-subtitle: "Presentation subtitle (if any)"
-author: "Team name <br> Craig, Sophia, Adi, Lauren and Ronan"
-=======
 title: "Twitch Streamer Presentation"
 author: "CARLS <br> Craig, Adi, Ronan, Lauren, and Sophia"
->>>>>>> 1d8cfe358b2674cf0bc0c6ef6f3b2f635428d009
 institute: "University of Edinburgh"
 date: "`r Sys.Date()`"
 output:
@@ -59,26 +53,12 @@ class: inverse, center, middle
 
 # Research Question and Data
 
-<<<<<<< HEAD
-- How stream time affects followers gained and watch time (over the duration of a year)
-
-- Awesome public data sets from kaggle.com
-=======
 - How does stream time affect watch time and followers gained?
 
 - This data was found through Awesome Public Datasets and was downloaded from Kaggle.com .
->>>>>>> 38105672ac2b8da222c4cf80fb4cf84595080e06
 
-<<<<<<< HEAD
-```{r}
-nrow(twitchdata)
-ncol(twitchdata)
-
-```
-
-=======
 - There are `r nrow(twitchdata)` different entries and `r ncol(twitchdata)` different variables.
->>>>>>> fcaf017a80cb8f64df160910a6f887c3adc527ed
+
 
 ---
 
@@ -146,9 +126,13 @@ iris_modified <- iris %>%
 # Code hidden with echo = FALSE
 # Uses modified iris dataset from previous chunk
 # Play around with height and width until you're happy with the look
-ggplot(data = twitchdata, mapping = aes(x = Stream.time.minutes., y = Followers.gained)) +
-  geom_point() + 
-  theme_minimal() # theme options: https://ggplot2.tidyverse.org/reference/ggtheme.html
+ggplot(data = twitchdata, 
+       mapping = aes(x = log(Stream.time.minutes.), 
+                     y = log(Followers.gained))) +
+                 geom_point() + 
+                 labs (x = "Stream Time (mins)",
+                       y = "Followers Gained") +
+                 theme_minimal() # theme options: https://ggplot2.tidyverse.org/reference/ggtheme.html
 ```
 
 ---

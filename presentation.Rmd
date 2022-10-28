@@ -150,16 +150,20 @@ ggplot(data = twitchdata,
 
 ## Results needed to support hypothesis
 
-.pull-left[
-- Some text
-- goes here
-]
-.pull-right[
 ```{r warning=FALSE, out.width="100%", fig.width=4, echo=FALSE}
 # see how I changed out.width and fig.width from defaults
 # to make the figure bigger
+
+plug <- as.data.frame(twitchdata)
+
+ggplot(
+      mapping = aes( x = c(2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30),
+                     y = c(5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 60, 55, 50))) +
+    geom_point() +
+    labs(title = "Stream Time to Watch Time",
+          x = "Stream Time/per Minute (10^6)",
+          y = "Stream Time/per Minute (10^8)")
 ```
-]
 
 ---
 

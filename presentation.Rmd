@@ -126,24 +126,26 @@ ggplot(twitchdata,
 ```{r recode-species, echo = FALSE}
 # In this chunk I'm doing a bunch of analysis that I don't want to present 
 # in my slides. But I need the resulting data frame for a plot I want to present.
+twitchdata <- mutate(twitchdata,
+                     Gain.percent = 100*Followers.gained/(Followers-Followers.gained))
 language_data <- count(twitchdata, Language, sort= TRUE)
-print(language_data)
 ```
 ---
 ```{r plot-data, echo = FALSE, warning=FALSE}
 # Code hidden with echo = FALSE
 # Uses modified iris dataset from previous chunk
 # Play around with height and width until you're happy with the look
-ggplot(data = twitchdata, 
-       mapping = aes(x = Stream.time.minutes., 
-                     y = Followers.gained,
-                     color=Language)) +
+twitchdata %>%
+  filter(Language == "English") %>%
+ filter(Gain.percent < quantile(Gain.percent, 0.75) &
+         Gain.percent > quantile(Gain.percent, 0.25)) %>%
+  ggplot(mapping = aes(x = log(Stream.time.minutes.), 
+                       y = log(Watch.time.Minutes.))) +
                  geom_point() + 
                  labs (title = "Stream Time to Followers Gained",
-                       subtitle = "",
-                       x = "Stream Time (min)",
-                       y = "Followers Gained") +
-                 theme_minimal() # theme options: https://ggplot2.tidyverse.org/reference/ggtheme.html
+                       x = "ln Stream Time (min)",
+                       y = "ln Watch Time (min)") +
+          geom_smooth() # theme options: https://ggplot2.tidyverse.org/reference/ggtheme.html
 ```
 
 ---

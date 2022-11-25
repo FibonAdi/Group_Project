@@ -29,7 +29,12 @@ twitchdata <- read.csv("twitchdata-update.csv")
 
 ```{r twitchdata}
 twitchdata <- mutate(twitchdata,
-                     Gain.percent = 100*Followers.gained/(Followers-Followers.gained))
+                     Gain.percent = 100*Followers.gained/(Followers-Followers.gained),
+                     log_Watch.time.Minutes. = log(Watch.time.Minutes.),
+                     log_Followers = log(Followers),
+                     log_Followers.gained = log(Followers.gained),
+                     log_Stream.time.minutes. = log(Stream.time.minutes.),
+                     log_Views.gained = log(Views.gained))
 language_data <- count(twitchdata, Language, sort= TRUE)
 ```
 
@@ -64,15 +69,15 @@ twitchdata %>%
   filter(Language == "English") %>%
   #filter(Watch.time.Minutes. < quantile(Watch.time.Minutes., 0.99) &
    #      Watch.time.Minutes. > quantile(Watch.time.Minutes., 0.01)) %>%
-  filter(Gain.percent < quantile(Gain.percent, 0.9) &
-         Gain.percent > quantile(Gain.percent, 0.01)) %>%
+  #filter(Gain.percent < quantile(Gain.percent, 0.9) &
+   #      Gain.percent > quantile(Gain.percent, 0.01)) %>%
   ggplot(mapping = aes(x = log(Watch.time.Minutes.), 
-                       y = (Followers))) +
+                       y = log(Followers))) +
                  geom_point() + 
                  labs (title = "Watch Time to Followers",
                        x = "ln Watch Time (min)",
                        y = "Followers") +
-        geom_smooth()
+        geom_smooth(method = "lm")
 ```
 
 ``` {r StreamTime_PercentageGain, echo = FALSE}
@@ -92,14 +97,15 @@ twitchdata %>%
 ```
 
 ```{r recipe_watchtime_followers}
-twitchdata_recipe_1 <- recipe(Followers ~ Watch.time.Minutes., 
-                      data = twitchdata) %>%
-  step_dummy(all_nominal(), -all_outcomes())
+twitchdata_recipe_1 <- recipe(log_Followers.gained ~ log_Watch.time.Minutes. +
+                                log_Stream.time.minutes. +
+                                log_Views.gained,
+                      data = twitchdata)
 ```
 
 ```{r model_watchtime_followers}
-twitchdata_spec_1 <- logistic_reg() %>%
-  set_engine("glm")
+twitchdata_spec_1 <- linear_reg() %>%
+  set_engine("lm")
 ```
 
 ```{r workflow_watchtime_followers}
@@ -116,16 +122,10 @@ tidy(twitchdata_fit_1)
 
 ```{r pred_watchtime_followers}
 twitchdata_pred_1 <- predict(twitchdata_fit_1, 
-                             twitchdata_test, 
-                             type = "prob") %>%
+                             twitchdata_test) %>%
   bind_cols(twitchdata_test)
 ```
 
-```{r ROC_curve_watchtime_followers}
-twitchdata_pred_1 %>%
-  roc_curve(
-    truth = advfront,
-    .pred_Agree
-  ) %>%
-  autoplot()
+```{r accuracy_watchtime_followers}
+glance(twitchdata_fit_1)$adj.r.squared
 ```

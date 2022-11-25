@@ -12,6 +12,7 @@ library(palmerpenguins)
 library(knitr)
 library(xaringanthemer)
 library(ggplot2)
+library(tidymodels)
 ```
 
 ## R Markdown
@@ -32,7 +33,15 @@ twitchdata <- mutate(twitchdata,
 language_data <- count(twitchdata, Language, sort= TRUE)
 ```
 
+```{r split-data}
+set.seed(1234)
+twitchdata_split <- initial_split(twitchdata)
+twitchdata_train <- training(twitchdata_split)
+twitchdata_test  <- testing(twitchdata_split)
+```
+
 ## Plots and Graphs
+
 _Stream Time to Watch Time, filtering out outliers (values that lie outside 98% of data) and considering only english streamers._
 ```{r StreamTime_WatchTime, echo=FALSE}
 twitchdata %>%
@@ -66,7 +75,7 @@ twitchdata %>%
         geom_smooth()
 ```
 
-``` {r StreamTime_Followers, echo = FALSE}
+``` {r StreamTime_PercentageGain, echo = FALSE}
 twitchdata %>%
   filter(Language == "English") %>%
   #filter(Watch.time.Minutes. < quantile(Watch.time.Minutes., 0.99) &
@@ -82,5 +91,41 @@ twitchdata %>%
         geom_smooth()
 ```
 
+```{r recipe_watchtime_followers}
+twitchdata_recipe_1 <- recipe(Followers ~ Watch.time.Minutes., 
+                      data = twitchdata) %>%
+  step_dummy(all_nominal(), -all_outcomes())
+```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r model_watchtime_followers}
+twitchdata_spec_1 <- logistic_reg() %>%
+  set_engine("glm")
+```
+
+```{r workflow_watchtime_followers}
+twitchdata_wflow <- workflow() %>%
+  add_model(twitchdata_spec_1) %>%
+  add_recipe(twitchdata_recipe_1)
+```
+
+```{r fit_watchtime_followers}
+twitchdata_fit_1 <- twitchdata_wflow %>%
+  fit(data = twitchdata_train)
+tidy(twitchdata_fit_1)
+```
+
+```{r pred_watchtime_followers}
+twitchdata_pred_1 <- predict(twitchdata_fit_1, 
+                             twitchdata_test, 
+                             type = "prob") %>%
+  bind_cols(twitchdata_test)
+```
+
+```{r ROC_curve_watchtime_followers}
+twitchdata_pred_1 %>%
+  roc_curve(
+    truth = advfront,
+    .pred_Agree
+  ) %>%
+  autoplot()
+```

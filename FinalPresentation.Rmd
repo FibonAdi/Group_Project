@@ -1,0 +1,26 @@
+
+```{r load-packages, include = FALSE}
+# Add any additional packages you need to this chunk
+library(tidyverse)
+library(palmerpenguins)
+library(knitr)
+library(xaringanthemer)
+library(ggplot2)
+```
+
+```{r setup, include=FALSE}
+# For better figure resolution
+knitr::opts_chunk$set(fig.retina = 3, dpi = 300, fig.width = 6, fig.asp = 0.618, out.width = "80%")
+```
+
+```{r load-data, include=FALSE}
+# Load your data here
+twitchdata <- read.csv("twitchdata-update.csv")
+```
+
+```{r include=FALSE}
+style_xaringan(
+  title_slide_background_image = "img/confetti.jpg"
+)
+```
+

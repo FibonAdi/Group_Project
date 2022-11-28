@@ -36,8 +36,14 @@ _Twitch is an American company with a particular focus on gaming and live stream
 
 ## Hypothesis
 
-_Our initial hypothesis was to identify the correlation between stream time and watch time as well as followers gained. To do so we started off by compiling a list of the primary language used by the streamers and the frequency of them. This was then put into a table and we discovered that the number of people who spoke each language ranged from 1 to 485, with English being the widest spoken language at 485. While this is interesting English is the most widely spoken with the next one down being Korean at 77. This would make language comparisons difficult as English dominates the data greatly and thus english would be overrepresented in analysis linked to language. This prompted our decision to focus on streamers who spoke English._
+_Our initial hypothesis was to identify the correlation between stream time and watch time as well as followers gained. To do so we started off by compiling a list of the primary language used by the streamers and the frequency of them. This was then put into a table and we discovered that the number of people who spoke each language ranged from 1 to 485, with English being the widest spoken language at 485. While this is interesting English is the most widely spoken with the next one down being Korean at 77. This would make language comparisons difficult as English dominates the data greatly and thus English would be over represented in analysis linked to language. This prompted our decision to focus mainly on streamers who spoke English._
 
+
+## Data Wrangling 
+_After this we made a graph of stream time verses followers gained. We then filtered them by language. However there didn’t appear to be any correlation. After this we were advised by our tutor to look at the log and square of the data and see if that produced a correlation, when that still didn’t show any strong correlation we decided to change our question slightly. To look at how follower numbers and followers gained are affected by various variables, namely Stream time and watch time._
+ 
+
+_When our data still did not show a correlation we decided to augment it by taking the log of our data and did our graphs using this:_
 
 ```{r twitchdata, warning = FALSE}
 twitchdata <- mutate(twitchdata,

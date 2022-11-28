@@ -69,7 +69,10 @@ language_data <- count(twitchdata, Language, sort= TRUE)
 
 ## Plots and Graphs
 
-_Stream Time to Watch Time, considering only English streamers. Natural log taken of both sides_
+_In the following graphs, we only accounted for English-speaking streamers, and took the natural log of each variable.  The graphs below represent the correlations between different variables of this data set, and can be used to predict the relationships that exist between them;_
+
+_In this graph, we compared the values for Stream Time (the amount of time an individual streams on Twitch, in minutes) with the values for Watch Time (the amount of time spent by viewers watching the stream, in minutes).  Between 11 and 12 minutes of stream time, there is a cluster of points, which may be a result of overrepresentation of individuals that stream for this amount of time._
+
 ```{r StreamTime_WatchTime, echo=FALSE}
 twitchdata %>%
   filter(Language == "English") %>%

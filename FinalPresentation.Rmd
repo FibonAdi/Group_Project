@@ -1,4 +1,18 @@
-
+---
+title: "Twitch Streamer Presentation"
+author: "CARLS <br> Craig, Adi, Ronan, Lauren, and Sophia"
+institute: "University of Edinburgh"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    css: xaringan-themer.css
+    lib_dir: libs
+    nature:
+      ratio: "16:9"
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
 ```{r load-packages, include = FALSE}
 # Add any additional packages you need to this chunk
 library(tidyverse)

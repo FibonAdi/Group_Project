@@ -20,7 +20,7 @@ twitchdata <- read.csv("twitchdata-update.csv")
 
 ```{r include=FALSE}
 style_xaringan(
-  title_slide_background_image = "img/confetti.jpg"
+  title_slide_background_image = "img/Twitch.jpg"
 )
 ```
 

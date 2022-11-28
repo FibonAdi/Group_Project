@@ -27,50 +27,38 @@ twitchdata <- read.csv("twitchdata-update.csv")
 
 -------
 
-```{r twitchdata}
+```{r twitchdata, warning = FALSE}
 twitchdata <- mutate(twitchdata,
                      Gain.percent = 100*Followers.gained/(Followers-Followers.gained),
                      log_Watch.time.Minutes. = log(Watch.time.Minutes.),
                      log_Followers = log(Followers),
-                     log_Followers.gained = log(Followers.gained),
                      log_Stream.time.minutes. = log(Stream.time.minutes.),
-                     log_Views.gained = log(Views.gained))
+                     log_Average.viewers = log(Average.viewers))
 language_data <- count(twitchdata, Language, sort= TRUE)
 ```
 
-```{r split-data}
-set.seed(1234)
-twitchdata_split <- initial_split(twitchdata)
-twitchdata_train <- training(twitchdata_split)
-twitchdata_test  <- testing(twitchdata_split)
-```
+
 
 ## Plots and Graphs
 
-_Stream Time to Watch Time, filtering out outliers (values that lie outside 98% of data) and considering only english streamers._
+_Stream Time to Watch Time, considering only English streamers. Natural log taken of both sides_
 ```{r StreamTime_WatchTime, echo=FALSE}
 twitchdata %>%
   filter(Language == "English") %>%
- filter(Gain.percent < quantile(Gain.percent, 0.75) &
-         Gain.percent > quantile(Gain.percent, 0.25)) %>%
   ggplot(mapping = aes(x = log(Stream.time.minutes.), 
                        y = log(Watch.time.Minutes.))) +
                  geom_point() + 
-                 labs (title = "Stream Time to Followers Gained",
+                 labs (title = "Stream Time to Watch time",
                        x = "ln Stream Time (min)",
                        y = "ln Watch Time (min)") +
           geom_smooth()
 ```
 
 
-_Considering the interquartile range of the percentage of followers gained over the past year. Again using only english streamers_
+_How watch time affects followers (total). Again using only english streamers. Taking the natural log of both variables _
 ``` {r WatchTime_Followers, echo = FALSE}
 twitchdata %>%
   filter(Language == "English") %>%
-  #filter(Watch.time.Minutes. < quantile(Watch.time.Minutes., 0.99) &
-   #      Watch.time.Minutes. > quantile(Watch.time.Minutes., 0.01)) %>%
-  #filter(Gain.percent < quantile(Gain.percent, 0.9) &
-   #      Gain.percent > quantile(Gain.percent, 0.01)) %>%
   ggplot(mapping = aes(x = log(Watch.time.Minutes.), 
                        y = log(Followers))) +
                  geom_point() + 
@@ -80,52 +68,132 @@ twitchdata %>%
         geom_smooth(method = "lm")
 ```
 
-``` {r StreamTime_PercentageGain, echo = FALSE}
+_How watch time affects followers gained (total). Again only english streamers. Filtered out data where percentage gained is an outlier (and morphs the scale). Watch time is taken as the natural log. _
+``` {r WatchTime_PercentageGain, echo = FALSE}
 twitchdata %>%
   filter(Language == "English") %>%
-  #filter(Watch.time.Minutes. < quantile(Watch.time.Minutes., 0.99) &
-   #      Watch.time.Minutes. > quantile(Watch.time.Minutes., 0.01)) %>%
-  filter(Gain.percent < quantile(Gain.percent, 0.75) &
-         Gain.percent > quantile(Gain.percent, 0.25)) %>%
-  ggplot(mapping = aes(x = log(Stream.time.minutes.), 
+ filter(Gain.percent < quantile(Gain.percent, 0.9) &
+        Gain.percent > quantile(Gain.percent, 0.1)) %>%
+  ggplot(mapping = aes(x = log(Watch.time.Minutes.), 
                        y = (Gain.percent))) +
                  geom_point() + 
-                 labs (title = "Stream Time to Followers",
+                 labs (title = "Watch Time to Followers",
                        x = "ln Watch Time (min)",
-                       y = "Followers") +
+                       y = "Followers Gained (%)") +
         geom_smooth()
 ```
 
-```{r recipe_watchtime_followers}
-twitchdata_recipe_1 <- recipe(log_Followers.gained ~ log_Watch.time.Minutes. +
-                                log_Stream.time.minutes. +
-                                log_Views.gained,
-                      data = twitchdata)
+_How Stream time affects followers (total). Again only english streamers. Natural log is taken of both variables._
+``` {r StreamTime_Followers, echo = FALSE}
+twitchdata %>%
+  filter(Language == "English") %>%
+  ggplot(mapping = aes(x = log(Peak.viewers), 
+                       y = log(Average.viewers))) +
+                 geom_point() + 
+                 labs (title = "Stream Time to Followers",
+                       x = "ln Stream Time (min)",
+                       y = "ln Followers") +
+        geom_smooth()
 ```
 
-```{r model_watchtime_followers}
+_How Stream time affects average viewers. Again only english streamers. Natural log is taken of both variables._
+``` {r StreamTime_AverageViews, echo = FALSE}
+twitchdata %>%
+  filter(Language == "English") %>%
+  ggplot(mapping = aes(x = log(Stream.time.minutes.), 
+                       y = log(Average.viewers))) +
+                 geom_point() + 
+                 labs (title = "Stream Time to Average Viewers",
+                       x = "ln Stream Time (min)",
+                       y = "ln Viewers") +
+        geom_smooth()
+```
+_How total followers affect number of viewers. Again only english streamers. log taken of both sides._
+``` {r Followers_Viewers, echo = FALSE}
+twitchdata %>%
+  filter(Language == "English") %>%
+  ggplot(mapping = aes(x = log(Followers), 
+                       y = log(Average.viewers))) +
+                 geom_point() + 
+                 labs (title = "Average Viewers to Followers",
+                       x = "ln Followers ",
+                       y = "ln Average Viewers") +
+        geom_smooth()
+```
+
+_How Watch time affect number of viewers. Again only english streamers. Natural log taken of both sides._
+``` {r StreamTime_PercentageGain, echo = FALSE}
+twitchdata %>%
+  filter(Language == "English") %>%
+  ggplot(mapping = aes(x = log(Watch.time.Minutes.), 
+                       y = log(Average.viewers))) +
+                 geom_point() + 
+                 labs (title = "Watch time to Average Viewers",
+                       x = "ln Watch time (min) ",
+                       y = "ln Average Viewers") +
+        geom_smooth()
+```
+
+## Models
+
+_Anything with a 1 after it is part of the model for ln watch time by using ln stream time and ln followers. Anything with a 2 after it is for a model that predicts viewers based on followers, watch time and stream time. All models only work for english streamers. The first model has an r squared of 0.42, and the second has an r squared of 0.98._
+
+```{r split-data}
+englishdata <- filter(twitchdata, Language == "English")
+set.seed(1234)
+twitchdata_split <- initial_split(englishdata)
+twitchdata_train <- training(twitchdata_split)
+twitchdata_test  <- testing(twitchdata_split)
+```
+
+```{r recipe}
+twitchdata_recipe_1 <- recipe(log_Watch.time.Minutes. ~ log_Followers +
+                                log_Stream.time.minutes.,
+                      data = englishdata)
+twitchdata_recipe_2 <- recipe(log_Average.viewers ~ log_Followers +
+                                log_Watch.time.Minutes. +
+                                log_Stream.time.minutes.,
+                              data = englishdata)
+```
+
+```{r model}
 twitchdata_spec_1 <- linear_reg() %>%
+  set_engine("lm")
+twitchdata_spec_2 <- linear_reg() %>%
   set_engine("lm")
 ```
 
-```{r workflow_watchtime_followers}
-twitchdata_wflow <- workflow() %>%
+```{r workflow}
+twitchdata_wflow_1 <- workflow() %>%
   add_model(twitchdata_spec_1) %>%
   add_recipe(twitchdata_recipe_1)
+
+twitchdata_wflow_2 <- workflow() %>%
+  add_model(twitchdata_spec_2) %>%
+  add_recipe(twitchdata_recipe_2)
 ```
 
-```{r fit_watchtime_followers}
-twitchdata_fit_1 <- twitchdata_wflow %>%
+```{r fit}
+twitchdata_fit_1 <- twitchdata_wflow_1 %>%
   fit(data = twitchdata_train)
 tidy(twitchdata_fit_1)
+
+twitchdata_fit_2 <- twitchdata_wflow_2 %>%
+  fit(data = twitchdata_train)
+tidy(twitchdata_fit_2)
 ```
 
-```{r pred_watchtime_followers}
+```{r pred}
 twitchdata_pred_1 <- predict(twitchdata_fit_1, 
+                             twitchdata_test) %>%
+  bind_cols(twitchdata_test)
+
+twitchdata_pred_2 <- predict(twitchdata_fit_2, 
                              twitchdata_test) %>%
   bind_cols(twitchdata_test)
 ```
 
-```{r accuracy_watchtime_followers}
+```{r accuracy}
 glance(twitchdata_fit_1)$adj.r.squared
+glance(twitchdata_fit_2)$adj.r.squared
 ```

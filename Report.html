@@ -570,6 +570,27 @@ twitchdata_pred_2 &lt;- predict(twitchdata_fit_2,
 <pre class="r"><code>glance(twitchdata_fit_2)$adj.r.squared</code></pre>
 <pre><code>## [1] 0.9831478</code></pre>
 </div>
+<div id="evaluation" class="section level2">
+<h2>Evaluation</h2>
+<p><em>Limitations: In the dataset there were multiple variables which
+could have affected the data collected and our analysis. We do not have
+information about the type of content being streamed, such as whether an
+individual is streaming video games, sports, music, or other types of
+content. We also do not know the subject or topic of the streams, which
+could be subject to internet trends and could affect their watch time,
+viewers, followers, and other variables. It is also important to
+consider that many Twitch streamers may already have a following on
+other platforms, and because of this, could subsequently have a higher
+number of viewers and followers on Twitch.</em></p>
+<p><em>Through our graphs we showed multiple correlations, some expected
+such as when watch time increases the number of followers does too or
+similarly as stream time increases the number of followers increases as
+well. However, we also have some findings we did not expect such as, the
+longer stream time is the more the number of viewers declines. We also
+created two models one of which predicts average viewers based on
+followers, watch time and stream. These models can predict the average
+number of viewers with an r-squared value of 0.98.</em></p>
+</div>
 
 
 

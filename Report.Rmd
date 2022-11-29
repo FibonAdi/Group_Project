@@ -86,7 +86,7 @@ twitchdata %>%
 ```
 
 
-_How watch time affects followers (total). Again using only english streamers. Taking the natural log of both variables _
+_This graph displays the relationship between Watch Time and Followers (the number of people following the streamer).  We took the log of the values for the Watch Time variable, with the values for the Followers variable remaining the same.  There is a slight linear relationship between these variables, indicating that a higher watch time suggests a higher number of followers.  However, this correlation is not sufficient to definitively establish this relationship between Watch Time and Followers._
 ``` {r WatchTime_Followers, echo = FALSE}
 twitchdata %>%
   filter(Language == "English") %>%
@@ -99,7 +99,7 @@ twitchdata %>%
         geom_smooth(method = "lm")
 ```
 
-_How watch time affects followers gained (total). Again only english streamers. Filtered out data where percentage gained is an outlier (and morphs the scale). Watch time is taken as the natural log. _
+_This graph displays the relationship between a streamer’s watch time and the percent change in their amount of followers (Followers Gained).  We filtered out data where the percentage of followers gained was an outlier (such as data points where a streamer suddenly gained an abnormally large amount of followers at once, which would have altered the validity of the relationship between variables).  Similar to the graph above, Watch Time was taken as a natural log, with Followers Gained taken as a percentage. _
 ``` {r WatchTime_PercentageGain, echo = FALSE}
 twitchdata %>%
   filter(Language == "English") %>%
@@ -108,13 +108,13 @@ twitchdata %>%
   ggplot(mapping = aes(x = log(Watch.time.Minutes.), 
                        y = (Gain.percent))) +
                  geom_point() + 
-                 labs (title = "Watch Time to Followers",
+                 labs (title = "Watch Time to Followers Gained",
                        x = "ln Watch Time (min)",
                        y = "Followers Gained (%)") +
         geom_smooth()
 ```
 
-_How Stream time affects followers (total). Again only english streamers. Natural log is taken of both variables._
+_This graph examines the relationship between the amount of time streamed and the total number of followers the streamer has.  In this graph we took the natural log of both the Stream Time variable and the Followers variable.  This graph shows a clear linear relationship between these variables, in which higher stream time can be associated with a higher follower count.  There is also a large cluster of data points between 8 and 10 minutes of stream time._
 ``` {r StreamTime_Followers, echo = FALSE}
 twitchdata %>%
   filter(Language == "English") %>%
@@ -127,7 +127,7 @@ twitchdata %>%
         geom_smooth()
 ```
 
-_How Stream time affects average viewers. Again only english streamers. Natural log is taken of both variables._
+_This graph compares the amount of stream time with the average number of viewers watching the stream (represented by the Viewers variable), with the natural log taken of each variable.  There is a large cluster of points between 11 and 12 minutes of stream time.  There is a linear relationship that shows a shorter stream time being associated with a higher average number of viewers , and longer stream time with less average viewers._
 ``` {r StreamTime_AverageViews, echo = FALSE}
 twitchdata %>%
   filter(Language == "English") %>%
@@ -228,3 +228,4 @@ twitchdata_pred_2 <- predict(twitchdata_fit_2,
 glance(twitchdata_fit_1)$adj.r.squared
 glance(twitchdata_fit_2)$adj.r.squared
 ```
+

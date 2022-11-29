@@ -241,4 +241,15 @@ _Limitations: In the dataset there were multiple variables which could have affe
 _Through our graphs we showed multiple correlations, some expected such as when watch time increases the number of followers does too or similarly as stream time increases the number of followers increases as well. However, we also have some findings we did not expect such as, the longer stream time is the more the number of viewers declines.
 We also created two models one of which predicts average viewers based on followers, watch time and stream. These models can predict the average number of viewers with an r-squared value of 0.98._ 
 
+## Link to GitHub Repository
+
+<https://github.com/FibonAdi/Group_Project.git>
+
+## Data
+
+Aayush Mishra, 2020, Top Streamers on Twitch, Electronic data set, Kaggle, Viewed 29th October 2022, <https://www.kaggle.com/datasets/aayushmishra1512/twitchdata>
+
+## References
+
+Wikipedia (2022), Twitch (service), viewed 25 November 2022, <https://en.wikipedia.org/wiki/Twitch_(service)>
 

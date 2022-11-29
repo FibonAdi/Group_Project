@@ -38,3 +38,28 @@ style_xaringan(
 )
 ```
 
+# Twitch
+
+.pull-left[Twitch is an American company with a particular focus on gaming and live streaming content.]
+.pull-right[A twitch streamer is someone who uses the platform Twitch to livestream content to others across the world.
+]
+```{r castle, echo = FALSE, out.width = "60%", fig.align = "center", fig.cap = "Image credit: Making a meme [Online] url: https://makeameme.org/meme/thank-you-for-tixmu6 (Acessed 28/10/2022)."}
+include_graphics("img/Twitch.jpg")
+
+```
+---
+# The Over Representation of English 
+```{r warning=FALSE, out.width="70%", fig.width=6, echo=FALSE}
+# see how I changed out.width and fig.width from defaults
+# to make the figure bigger
+ggplot(twitchdata, 
+       aes(y = Language,
+           fill = Language)) +
+  geom_bar() +
+  theme_minimal()
+
+```
+
+
+
+

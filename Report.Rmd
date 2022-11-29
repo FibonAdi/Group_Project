@@ -39,7 +39,7 @@ _Twitch is an American company with a particular focus on gaming and live stream
 _Our initial hypothesis was to identify the correlation between stream time and watch time as well as followers gained. To do so we started off by compiling a list of the primary language used by the streamers and the frequency of them. This was then put into a table and we discovered that the number of people who spoke each language ranged from 1 to 485, with English being the widest spoken language at 485. While this is interesting English is the most widely spoken with the next one down being Korean at 77. This would make language comparisons difficult as English dominates the data greatly and thus English would be over represented in analysis linked to language. This prompted our decision to focus mainly on streamers who spoke English._
 
 
-```{r warning=FALSE, out.width="30%", fig.width=4, echo=FALSE}
+```{r warning=FALSE, out.width="70%", fig.width=6, echo=FALSE}
 ggplot(twitchdata, 
        aes(y = Language,
            fill = Language)) +

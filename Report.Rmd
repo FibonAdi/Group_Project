@@ -71,7 +71,7 @@ language_data <- count(twitchdata, Language, sort= TRUE)
 
 _In the following graphs, we only accounted for English-speaking streamers, and took the natural log of each variable.  The graphs below represent the correlations between different variables of this data set, and can be used to predict the relationships that exist between them;_
 
-_In this graph, we compared the values for Stream Time (the amount of time an individual streams on Twitch, in minutes) with the values for Watch Time (the amount of time spent by viewers watching the stream, in minutes).  Between 11 and 12 minutes of stream time, there is a cluster of points, which may be a result of overrepresentation of individuals that stream for this amount of time._
+_In this graph, we compared the values for Stream Time (the amount of time an individual streams on Twitch, in minutes) with the values for Watch Time (the amount of time spent by viewers watching the stream, in minutes).  Between e^11 and e^12 minutes of stream time, there is a cluster of points, which may be a result of overrepresentation of individuals that stream for this amount of time._
 
 ```{r StreamTime_WatchTime, echo=FALSE}
 twitchdata %>%
@@ -114,7 +114,7 @@ twitchdata %>%
         geom_smooth()
 ```
 
-_This graph examines the relationship between the amount of time streamed and the total number of followers the streamer has.  In this graph we took the natural log of both the Stream Time variable and the Followers variable.  This graph shows a clear linear relationship between these variables, in which higher stream time can be associated with a higher follower count.  There is also a large cluster of data points between 8 and 10 minutes of stream time._
+_This graph examines the relationship between the amount of time streamed and the total number of followers the streamer has.  In this graph we took the natural log of both the Stream Time variable and the Followers variable.  This graph shows a clear linear relationship between these variables, in which higher stream time can be associated with a higher follower count.  There is also a large cluster of data points between e^8 and e^10 minutes of stream time._
 ``` {r StreamTime_Followers, echo = FALSE}
 twitchdata %>%
   filter(Language == "English") %>%
@@ -127,7 +127,7 @@ twitchdata %>%
         geom_smooth()
 ```
 
-_This graph compares the amount of stream time with the average number of viewers watching the stream (represented by the Viewers variable), with the natural log taken of each variable.  There is a large cluster of points between 11 and 12 minutes of stream time.  There is a linear relationship that shows a shorter stream time being associated with a higher average number of viewers , and longer stream time with less average viewers._
+_This graph compares the amount of stream time with the average number of viewers watching the stream (represented by the Viewers variable), with the natural log taken of each variable.  There is a large cluster of points between e^11 and e^12 minutes of stream time.  There is a linear relationship that shows a shorter stream time being associated with a higher average number of viewers , and longer stream time with less average viewers._
 ``` {r StreamTime_AverageViews, echo = FALSE}
 twitchdata %>%
   filter(Language == "English") %>%
@@ -152,7 +152,7 @@ twitchdata %>%
         geom_smooth()
 ```
 
-_In this graph, watch time is compared to average viewers, with the natural log taken of each variable again.  There is a larger cluster of points on the lower end of the graph (lower watch time), especially between 18 and 20 minutes.  Overall, the graph shows that a higher watch time is typically correlated with a higher count of average viewers._
+_In this graph, watch time is compared to average viewers, with the natural log taken of each variable again.  There is a larger cluster of points on the lower end of the graph (lower watch time), especially between e^18 and e^20 minutes.  Overall, the graph shows that a higher watch time is typically correlated with a higher count of average viewers._
 ``` {r StreamTime_PercentageGain, echo = FALSE}
 twitchdata %>%
   filter(Language == "English") %>%

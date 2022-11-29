@@ -139,7 +139,7 @@ twitchdata %>%
                        y = "ln Viewers") +
         geom_smooth()
 ```
-_How total followers affect number of viewers. Again only english streamers. log taken of both sides._
+_This graph demonstrates how a streamer’s amount of followers affects the amount of average viewers for their streams.  We also took the natural log of both variables to help establish a more clear relationship.  As can be seen from the graph, as a streamer’s followers increase, their average viewers increase as well._
 ``` {r Followers_Viewers, echo = FALSE}
 twitchdata %>%
   filter(Language == "English") %>%
@@ -152,7 +152,7 @@ twitchdata %>%
         geom_smooth()
 ```
 
-_How Watch time affect number of viewers. Again only english streamers. Natural log taken of both sides._
+_In this graph, watch time is compared to average viewers, with the natural log taken of each variable again.  There is a larger cluster of points on the lower end of the graph (lower watch time), especially between 18 and 20 minutes.  Overall, the graph shows that a higher watch time is typically correlated with a higher count of average viewers._
 ``` {r StreamTime_PercentageGain, echo = FALSE}
 twitchdata %>%
   filter(Language == "English") %>%

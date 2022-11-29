@@ -165,6 +165,10 @@ twitchdata %>%
         geom_smooth()
 ```
 
+## Findings
+
+_Our graphs show a strong link between the number of followers which increases as the stream time increases. Our graphs also indicate that the number of viewers decrease as the length of time a streamer streams increases but as average viewers increase the followers increase._
+
 ## Models
 
 _Anything with a 1 after it is part of the model for ln watch time by using ln stream time and ln followers. Anything with a 2 after it is for a model that predicts viewers based on followers, watch time and stream time. All models only work for english streamers. The first model has an r squared of 0.42, and the second has an r squared of 0.98._

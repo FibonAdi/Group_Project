@@ -173,6 +173,7 @@ _Our graphs show a strong link between the number of followers which increases a
 
 _Anything with a 1 after it is part of the model for ln watch time by using ln stream time and ln followers. Anything with a 2 after it is for a model that predicts viewers based on followers, watch time and stream time. All models only work for english streamers. The first model has an r squared of 0.42, and the second has an r squared of 0.98._
 
+## Modelling
 ```{r split-data}
 englishdata <- filter(twitchdata, Language == "English")
 set.seed(1234)
@@ -181,56 +182,74 @@ twitchdata_train <- training(twitchdata_split)
 twitchdata_test  <- testing(twitchdata_split)
 ```
 
-```{r recipe}
-twitchdata_recipe_1 <- recipe(log_Watch.time.Minutes. ~ log_Followers +
+```{r model}
+twitchdata_spec <- linear_reg() %>%
+  set_engine("lm")
+```
+
+###Watch time
+
+_The following model predicts watch time by using both followers and stream time._
+
+```{r recipe_watchtime}
+twitchdata_recipe_wtime <- recipe(log_Watch.time.Minutes. ~ log_Followers +
                                 log_Stream.time.minutes.,
                       data = englishdata)
-twitchdata_recipe_2 <- recipe(log_Average.viewers ~ log_Followers +
+
+```
+
+```{r workflow_watchtime}
+twitchdata_wflow_wtime <- workflow() %>%
+  add_model(twitchdata_spec) %>%
+  add_recipe(twitchdata_recipe_wtime)
+```
+
+```{r fit_watchtime}
+twitchdata_fit_wtime <- twitchdata_wflow_wtime %>%
+  fit(data = twitchdata_train)
+tidy(twitchdata_fit_wtime)
+```
+
+```{r pred_watchtime}
+twitchdata_pred_wtime <- predict(twitchdata_fit_wtime, 
+                             twitchdata_test) %>%
+  bind_cols(twitchdata_test)
+```
+
+```{r accuracy_watchtime}
+glance(twitchdata_fit_wtime)$adj.r.squared
+```
+
+### Viewers
+
+_The following predits average viewers based on followers, watch time and stream time._
+```{r recipe_viewers}
+twitchdata_recipe_viewers <- recipe(log_Average.viewers ~ log_Followers +
                                 log_Watch.time.Minutes. +
                                 log_Stream.time.minutes.,
                               data = englishdata)
 ```
 
-```{r model}
-twitchdata_spec_1 <- linear_reg() %>%
-  set_engine("lm")
-twitchdata_spec_2 <- linear_reg() %>%
-  set_engine("lm")
+```{r workflow_viewers}
+twitchdata_wflow_viewers <- workflow() %>%
+  add_model(twitchdata_spec) %>%
+  add_recipe(twitchdata_recipe_viewers)
 ```
 
-```{r workflow}
-twitchdata_wflow_1 <- workflow() %>%
-  add_model(twitchdata_spec_1) %>%
-  add_recipe(twitchdata_recipe_1)
-
-twitchdata_wflow_2 <- workflow() %>%
-  add_model(twitchdata_spec_2) %>%
-  add_recipe(twitchdata_recipe_2)
-```
-
-```{r fit}
-twitchdata_fit_1 <- twitchdata_wflow_1 %>%
+```{r fit_viewers}
+twitchdata_fit_viewers <- twitchdata_wflow_viewers %>%
   fit(data = twitchdata_train)
-tidy(twitchdata_fit_1)
-
-twitchdata_fit_2 <- twitchdata_wflow_2 %>%
-  fit(data = twitchdata_train)
-tidy(twitchdata_fit_2)
+tidy(twitchdata_fit_viewers)
 ```
 
-```{r pred}
-twitchdata_pred_1 <- predict(twitchdata_fit_1, 
-                             twitchdata_test) %>%
-  bind_cols(twitchdata_test)
-
-twitchdata_pred_2 <- predict(twitchdata_fit_2, 
+```{r pred_viewers}
+twitchdata_pred_viewers <- predict(twitchdata_fit_viewers, 
                              twitchdata_test) %>%
   bind_cols(twitchdata_test)
 ```
 
-```{r accuracy}
-glance(twitchdata_fit_1)$adj.r.squared
-glance(twitchdata_fit_2)$adj.r.squared
+```{r accuracy_viewers}
+glance(twitchdata_fit_viewers)$adj.r.squared
 ```
 
 ## Evaluation

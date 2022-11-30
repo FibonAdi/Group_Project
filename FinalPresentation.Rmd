@@ -60,8 +60,6 @@ ggplot(twitchdata,
 
 ```
 ---
-
-
 ```{r WatchTime_Followers, out.width="60%", fig.width=6, echo = FALSE}
 twitchdata %>%
   filter(Language == "English") %>%
@@ -103,7 +101,12 @@ twitchdata %>%
 
 ---
 
-# Model 
+# Model
+- 1st model: Watch time (followers and stream time)
+- 2nd model: Average Views (followers, watch time and stream time)
+
+- Uneven distribution (clumped data) so difficult to extend
+- Take log scale to minimize outlier effects and better visuals (see graphs)
 
 ---
 
@@ -118,7 +121,7 @@ twitchdata %>%
 
 ---
 
-# Thankyou for Listening 
+# Thank You for Listening 
 
 ```{r stable, echo = FALSE, out.width = "60%", fig.align = "center", fig.cap = "Image credit: Making a meme [Online] url: https://makeameme.org/meme/thank-you-for-tixmu6 (Acessed 28/10/2022)."}
 include_graphics("img/Endslide2.jpg")

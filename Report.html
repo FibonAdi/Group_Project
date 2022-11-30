@@ -509,8 +509,10 @@ twitchdata_train &lt;- training(twitchdata_split)
 twitchdata_test  &lt;- testing(twitchdata_split)</code></pre>
 <pre class="r"><code>twitchdata_spec &lt;- linear_reg() %&gt;%
   set_engine(&quot;lm&quot;)</code></pre>
-<p>###Watch time <em>The following model predicts watch time by using
-both followers and stream time</em></p>
+<div id="watch-time" class="section level3">
+<h3>Watch time</h3>
+<p><em>The following model predicts watch time by using both followers
+and stream time.</em></p>
 <pre class="r"><code>twitchdata_recipe_wtime &lt;- recipe(log_Watch.time.Minutes. ~ log_Followers +
                                 log_Stream.time.minutes.,
                       data = englishdata)</code></pre>
@@ -531,6 +533,7 @@ tidy(twitchdata_fit_wtime)</code></pre>
   bind_cols(twitchdata_test)</code></pre>
 <pre class="r"><code>glance(twitchdata_fit_wtime)$adj.r.squared</code></pre>
 <pre><code>## [1] 0.4202266</code></pre>
+</div>
 <div id="viewers" class="section level3">
 <h3>Viewers</h3>
 <p><em>The following predits average viewers based on followers, watch

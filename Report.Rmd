@@ -187,7 +187,7 @@ twitchdata_spec <- linear_reg() %>%
   set_engine("lm")
 ```
 
-###Watch time
+### Watch time
 
 _The following model predicts watch time by using both followers and stream time._
 
